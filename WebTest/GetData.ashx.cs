@@ -15,7 +15,22 @@ namespace WebTest
 
         public void ProcessRequest(HttpContext context)
         {
+
+            string pi = context.Request["pi"] ?? "1", ps = context.Request["ps"] ?? "10";
+            int pageIndex = int.Parse(pi), pageSize = int.Parse(ps);
             context.Response.ContentType = "text/plain";
+            string type = context.Request["type"];
+            Bib1Attr SearchType = Bib1Attr.Title;
+            if (type == "1")
+            {
+                SearchType = Bib1Attr.Author;
+            }else if (type == "2")
+            {
+                SearchType = Bib1Attr.ISBN;
+            }
+            string kw = context.Request["kw"] ?? "java";
+
+
             var server = new Server()
             {
                 Name = "mytest",
@@ -27,9 +42,8 @@ namespace WebTest
                 Password = "20141030"
             };
             int count = 0;
-            var tt = server.GetRecords(Bib1Attr.Title, "javascript", 10, 1, out count);
-            context.Response.Write(JsonConvert.SerializeObject(tt));
-
+            var tt = server.GetRecords(SearchType, kw, pageSize, pageIndex, out count);
+            context.Response.Write(JsonConvert.SerializeObject(new { list = tt, count = count }));
         }
 
         public bool IsReusable

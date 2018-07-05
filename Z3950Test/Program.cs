@@ -20,7 +20,7 @@ namespace Z3950Test
                 Password = "20141030"
             };
             int count = 0;
-            var tt = server.GetRecords(Bib1Attr.Title, "javascript", 10, 1, out count);
+            var tt = server.GetRecords(Bib1Attr.Title, "计算机", 10, 1, out count);
             tt.ToList().ForEach(obj =>
             {
                 Console.WriteLine(obj);

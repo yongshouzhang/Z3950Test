@@ -60,6 +60,7 @@
     <Content Include="Default.aspx" />
     <Content Include="packages.config" />
     <Content Include="GetData.ashx" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Z3950.dll" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

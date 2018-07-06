@@ -80,21 +80,7 @@
                     data = JSON.parse(data);
                     var count = data.count;
                     $(data.list).each(function () {
-                        var tmp = JSON.parse(this);
-                        var list = $(tmp.fields);
-                        var mainInfo = $(list.filter(function () {
-                            return this.hasOwnProperty("200");
-                        })[0]["200"].subfields);
-                        var title = mainInfo.filter(function () {
-                            return this["a"];
-                        })[0]["a"],
-                        author = mainInfo.filter(function () {
-                            return this.hasOwnProperty("f");
-                        });
-                        if (author && author != null&&author.length>0) {
-                            author = author[0]["f"];
-                        }
-                        $("tbody").append('<tr><td>' + title + '</td><td>' + author + '</td></tr>');
+                        $("tbody").append('<tr><td>' + this.Title + '</td><td>' + this.Author + '</td><td>' + this.ISBN + '</td></tr>');
                         pagination({
                             container: $(".pagination")[0],
                             pageIndex: index,

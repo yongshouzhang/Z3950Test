@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B38DA88B-AECD-43EE-91E3-D823E881B1A9}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{040F21F2-0953-4D2D-A058-4CBD315842CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Z3950Test</RootNamespace>
-    <AssemblyName>Z3950Test</AssemblyName>
+    <RootNamespace>Z3950</RootNamespace>
+    <AssemblyName>Z3950</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -21,9 +20,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,15 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Connection.cs" />
+    <Compile Include="ConnectionExtended.cs" />
+    <Compile Include="ConnectionOptionsCollection.cs" />
+    <Compile Include="Marc\MarcField.cs" />
+    <Compile Include="Marc\MarcRecord.cs" />
+    <Compile Include="Marc\MarcSubfield.cs" />
+    <Compile Include="Marc\ParserDirectoryEntry.cs" />
+    <Compile Include="Marc\ParserVariableFieldData.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="PackageOptionsCollection.cs" />
+    <Compile Include="PrefixQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Record.cs" />
+    <Compile Include="ResultSet.cs" />
+    <Compile Include="ResultSetEnumerator.cs" />
+    <Compile Include="ResultSetOptionsCollection.cs" />
+    <Compile Include="ScanSet.cs" />
+    <Compile Include="ScanTerm.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="Yaz.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Z3950\Z3950.csproj">
-      <Project>{040f21f2-0953-4d2d-a058-4cbd315842ca}</Project>
-      <Name>Z3950</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

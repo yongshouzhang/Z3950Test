@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Configuration;
 namespace Z3950
 {
     using Marc;
@@ -68,6 +69,11 @@ namespace Z3950
             Username = string.Empty;
             Password = string.Empty;
             SavePasswordFlag = false;
+        }
+
+        public Server(string name)
+        {
+            ((Action<string, Server>)ConfigurationManager.GetSection("library/server"))(name, this);
         }
 
         #endregion

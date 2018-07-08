@@ -30,18 +30,7 @@ namespace WebTest
                 SearchType = Bib1Attr.ISBN;
             }
             string kw = context.Request["kw"] ?? "java";
-
-
-            var server = new Server()
-            {
-                Name = "mytest",
-                //Uri = "z3950.loc.gov",
-                Uri = "202.96.31.28",
-                Port = 9991,
-                DatabaseName = "UCS01",
-                Username = "L410581YHH",
-                Password = "20141030"
-            };
+            var server = new Server("server1");
             int count = 0;
             var tt = server.GetRecordsMarc(SearchType, kw, pageSize, pageIndex, out count).Select(obj =>
             {
@@ -52,9 +41,6 @@ namespace WebTest
                     Year= obj.Get_Data_Subfield(210,'a')
                 };
             });
-                
-
-
             context.Response.Write(JsonConvert.SerializeObject(new { list = tt, count = count }));
         }
 

@@ -90,7 +90,6 @@ namespace Z3950
                 {
                     DatabaseName = this.DatabaseName
                 };
-
                 if (!string.IsNullOrEmpty(Username))
                     connection.Username = Username;
 

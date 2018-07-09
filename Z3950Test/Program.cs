@@ -21,12 +21,12 @@ namespace Z3950Test
                 Password = "20141030"
             };
             int count = 0;
-            var tt = server.GetRecordsMarc(Bib1Attr.Title, "计算机", 10, 1, out count);
+            var tt = server.GetRecordsMarc(Bib1Attr.Title, "javascript", 10, 1, out count);
             
             tt.ToList().ForEach(obj =>
             {
-                var str=obj.Get_Data_Subfield(200, 'a');
-                Console.WriteLine(str);
+                //var str=obj.Get_Data_Subfield(200, 'a');
+                Console.WriteLine(obj);
             });
 
             Console.ReadKey();

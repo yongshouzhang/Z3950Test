@@ -19,7 +19,6 @@ namespace Z3950
             }
         }
 
-
         protected Connection()
         {
            
@@ -31,7 +30,9 @@ namespace Z3950
             _port = port;
 
             _options = new ConnectionOptionsCollection();
+            _options["mediumSetElementSetName"] = "F";
             ZConnection = Yaz.ZOOM_connection_create(_options.ZoomOptions);
+            Yaz.ZOOM_connection_option_setl(ZConnection, "mediumSetElementSetName", "F", 1);
 
             var errorCode = Yaz.ZOOM_connection_errcode(ZConnection);
             CheckErrorCodeAndThrow(errorCode);
@@ -54,11 +55,11 @@ namespace Z3950
                     throw new Exception(message);
 
                 case Yaz.ZoomErrorInit:
-                    message = $"Server {_host}:{_port} rejected our init request";
+                    message = string.Format("Server {0}:{1} rejected our init request", _host, _port);
                     throw new Exception(message);
 
                 case Yaz.ZoomErrorTimeout:
-                    message = $"Server {_host}:{_port} timed out handling our request";
+                    message = string.Format("Server {0}:{1} timed out handling our request", _host, _port);
                     throw new Exception(message);
 
                 case Yaz.ZoomErrorMemory:
@@ -81,7 +82,6 @@ namespace Z3950
             EnsureConnected();
             var yazQuery = Yaz.ZOOM_query_create();
             ResultSet resultSet;
-
             try
             {
                 // branching out to right YAZ-C call
@@ -91,8 +91,8 @@ namespace Z3950
                     Yaz.ZOOM_query_prefix(yazQuery, query.QueryString);
                 else
                     throw new NotImplementedException();
-
                 var yazResultSet = Yaz.ZOOM_connection_search(ZConnection, yazQuery);
+                 Yaz.ZOOM_resultset_option_set(yazResultSet, "elementSetName", "F");
                 // error checking C-style
                 var errorCode = Yaz.ZOOM_connection_errcode(ZConnection);
 
@@ -100,13 +100,10 @@ namespace Z3950
                     Yaz.ZOOM_resultset_destroy(yazResultSet);
 
                 CheckErrorCodeAndThrow(errorCode);
-
-                // everything ok, create result set
                 resultSet = new ResultSet(yazResultSet, this);
             }
             finally
             {
-                // deallocate yazQuery also when exceptions
                 Yaz.ZOOM_query_destroy(yazQuery);
             }
             return resultSet;

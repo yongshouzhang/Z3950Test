@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Z3950
 {
-    public class ResultSet :IDisposable, IList, IEnumerable, IEnumerable<Record>
+    public class ResultSet :IDisposable, IEnumerable, IEnumerable<Record>
     {
         internal ResultSet(IntPtr resultSet, Connection connection)
         {
@@ -54,7 +54,7 @@ namespace Z3950
             if (!_disposed)
             {
                 foreach (Record record in _records)
-                    record?.Dispose();
+                    record.Dispose();
 
                 Yaz.ZOOM_resultset_destroy(_resultSet);
                 _resultSet = IntPtr.Zero;
@@ -62,79 +62,11 @@ namespace Z3950
             }
         }
 
-        #region IList Members
-
-        public bool IsReadOnly { get { return true; } }
-
-        object IList.this[int index]
-        {
-            get { return ((ResultSet) this)[(uint) index]; }
-            set { throw new NotImplementedException("Underlying ResultSet is readonly"); }
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException("Underlying ResultSet is readonly");
-        }
-
-        public void Insert(int index, object value)
-        {
-            throw new NotImplementedException("Underlying ResultSet is readonly");
-        }
-
-        public void Remove(object value)
-        {
-            throw new NotImplementedException("Underlying ResultSet is readonly");
-        }
-
-        public bool Contains(object value)
-        {
-            throw new NotImplementedException("Underlying ResultSet is not searchable");
-        }
-
-        public void Clear()
-        {
-            throw new NotImplementedException("Underlying ResultSet is readonly");
-        }
-
-        public int IndexOf(object value)
-        {
-            throw new NotImplementedException("Underlying ResultSet is not searchable");
-        }
-
-        public int Add(object value)
-        {
-            throw new NotImplementedException("Underlying ResultSet is readonly");
-        }
-
-        public bool IsFixedSize { get { return true; } }
-
-        #endregion
-
-        #region ICollection Members
-
-        public bool IsSynchronized { get { return false; } }
-
-        public int Count { get { return (int)((ResultSet)this).Size; } }
-
-        public void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException("Underlying ResultSet is not copyable");
-        }
-
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException("Underlying ResultSet is not synchronised"); }
-        }
-
-        #endregion
-
         #region IEnumerable Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-            //return new ResultSetEnumerator(this);
         }
        
         public  IEnumerator<Record> GetEnumerator()
